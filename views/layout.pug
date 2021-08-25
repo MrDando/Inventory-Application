@@ -2,6 +2,19 @@ doctype html
 html
   head
     title= title
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    block content
+    header
+      h1 Inventory Application
+    div(class='container')
+      div(class='sidebar')
+        h2 Categories
+        ul(class='sidebar-nav')
+          each category in data.category_list
+            li 
+              a(href=category.url) #{category.name}
+        h2 Items
+        a(href='/items') All Items
+      block content

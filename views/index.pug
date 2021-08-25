@@ -1,5 +1,18 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main
+    h2= title
+
+    h3 Categories: #{data.category_list.length}
+    table
+      tr 
+        th Category
+        th Items 
+        th Item Instances 
+      each category in data.category_list 
+        tr
+          td 
+            a(href=category.url) #{category.name}
+          td(class='td-number')= counts[category.name].items
+          td(class='td-number')= counts[category.name].itemInstances
