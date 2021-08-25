@@ -33,9 +33,6 @@ router.post('/category/:id/update', category_controller.category_update_post);
 // GET request for one Category.
 router.get('/category/:id', category_controller.category_details);
 
-// GET request for list of all Categories.
-router.get('/categories', category_controller.category_list)
-
 
 /// ITEM ROUTES ///
 
@@ -59,9 +56,6 @@ router.post('/item/:id/update', item_controller.item_update_post);
 
 // GET request for one Item.
 router.get('/item/:id', item_controller.item_details);
-
-// GET request for list of all Items.
-router.get('/items', item_controller.item_list)
 
 
 /// ITEM INSTANCES ROUTES ///

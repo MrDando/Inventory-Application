@@ -5,10 +5,6 @@ var async = require('async')
 
 var CL = require('./categoryList')
 
-// Display list of all categories
-exports.category_list = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
-}
 
 // Display details of specific category
 exports.category_details = function(req, res, next) {

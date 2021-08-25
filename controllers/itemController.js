@@ -1,11 +1,6 @@
 var Item = require('../models/item');
 
 
-// Display list of all items
-exports.item_list = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
-}
-
 // Display details of specific item
 exports.item_details = function(req, res) {
     res.send('PAGE NOT IMPLEMENTED')
