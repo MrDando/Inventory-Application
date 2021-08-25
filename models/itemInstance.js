@@ -11,7 +11,7 @@ var ItemInstanceSchema = new mongoose.Schema({
 ItemInstanceSchema
     .virtual('url')
     .get(function() {
-        return '/iteminstance' + this._id;
+        return '/iteminstance/' + this._id;
     });
 
 //Export model
