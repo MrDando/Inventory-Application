@@ -1,6 +1,7 @@
-var Category = require('../models/category');
 var Item = require('../models/item');
 var ItemInstance = require('../models/itemInstance');
+
+var CL = require('./categoryList')
 
 var async = require('async');
 
@@ -8,11 +9,7 @@ var async = require('async');
 exports.index = function(req, res, next) {
     
     async.parallel({
-        category_list: function(callback) {
-            Category.find({}, 'name')
-            .sort([['name', 'ascending']])
-            .exec(callback)
-        },
+        category_list: CL.get_category_list,
         item_count: function(callback) {
             Item.countDocuments({}, callback)
         },
@@ -53,7 +50,6 @@ exports.index = function(req, res, next) {
             }
             categoryCounts[results.category_list[i].name].itemInstances = countItemInstances
         }
-
-        res.render('index', { title: 'Current Inventory', error: err, data: results, counts: categoryCounts})
+        res.render('index', { title: 'Current Inventory', error: err, data: results, counts: categoryCounts, category_list: results.category_list})
     })
 };

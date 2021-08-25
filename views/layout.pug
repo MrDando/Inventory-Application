@@ -12,7 +12,7 @@ html
       div(class='sidebar')
         h2 Categories
         ul(class='sidebar-nav')
-          each category in data.category_list
+          each category in category_list
             li 
               a(href=category.url) #{category.name}
         h2 Items
