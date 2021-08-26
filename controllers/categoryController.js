@@ -33,8 +33,13 @@ exports.category_details = function(req, res, next) {
 }
 
 // Display form for creating a new Category
-exports.category_create_get = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.category_create_get = function(req, res, next) {
+    async.parallel({
+        category_list: CL.get_category_list,
+    }, function(err, results) {
+        if (err) { return next(err)}
+        res.render('category_form', { title: 'Create a new Category' , category_list: results.category_list})
+    })
 }
 
 // Handle form data to create a new Category
