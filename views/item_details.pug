@@ -14,7 +14,7 @@ block content
 			each itemInstance in itemInstanceList 
 				-count += 1
 				tr
-					td= count
-					td=	(!(itemInstance.size == 'false')) ? itemInstance.size : '/'
-					td= itemInstance.color
-					td= itemInstance.stock
+					td(class='td-center')= count
+					td(class='td-center')= (!(itemInstance.size == 'false')) ? itemInstance.size : '/'
+					td(class='td-center')= itemInstance.color
+					td(class='td-center')= itemInstance.stock
