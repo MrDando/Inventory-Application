@@ -13,9 +13,19 @@ html
         h1 Inventory Application
     div(class='container')
       div(class='sidebar')
-        h2 Categories
-        ul(class='sidebar-nav')
-          each category in category_list
-            li 
-              a(href=category.url) #{category.name}
+        div(class='categories')
+          h2 Categories
+          ul(class='sidebar-nav')
+            each category in category_list
+              li 
+                a(href=category.url) #{category.name}
+        div(class='actions')
+          h2 Actions
+          ul 
+            li
+              a(href='/category/create') Create a new Category
+            li
+              a(href='/item/create') Create a new Item
+            li
+              a(href='/iteminstance/create') Create a new Item Instance
       block content
