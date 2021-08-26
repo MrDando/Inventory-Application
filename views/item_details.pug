@@ -1,0 +1,20 @@
+extends layout
+
+block content
+	main
+		h2= title 
+
+		table 
+			tr 
+				th #
+				th Size
+				th Color
+				th Stock
+			-var count = 0
+			each itemInstance in itemInstanceList 
+				-count += 1
+				tr
+					td= count
+					td=	(!(itemInstance.size == 'false')) ? itemInstance.size : '/'
+					td= itemInstance.color
+					td= itemInstance.stock

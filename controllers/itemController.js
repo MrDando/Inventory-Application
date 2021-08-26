@@ -1,9 +1,46 @@
 var Item = require('../models/item');
+var ItemInstance = require('../models/itemInstance')
 
+var async = require('async')
+
+var CL = require('./categoryList')
 
 // Display details of specific item
-exports.item_details = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.item_details = function(req, res, next) {
+    
+    async.parallel({
+        category_list: CL.get_category_list,
+        item: function(callback) {
+            Item.findById(req.params.id)
+            .exec(callback)
+        },
+        item_instances: function(callback) {
+            ItemInstance.find({'item': req.params.id})
+            .exec(callback)
+        }
+    }, function(err, results) {
+        if (err) { return next(err) }
+        if (results.item == null) {
+            // No Results
+            let err = new Error('Item not found')
+            err.status = 404;
+            return next(err)
+        }
+
+        // Checks if all item instances size properties are numbers
+        function sizeIsNumber(itemInst) {
+            return !isNaN(parseInt(itemInst.size))
+        }
+
+        // If all size properties are numbers sort array by size
+        if (results.item_instances.every(sizeIsNumber)) {
+            results.item_instances.sort(function(a,b) {
+                return a.size - b.size
+            })
+        }
+        res.render('item_details', { title: `Item: ${results.item.name}`, itemInstanceList: results.item_instances, category_list: results.category_list})
+    })
+    
 }
 
 // Display form for creating a new Item
