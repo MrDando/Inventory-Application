@@ -105,8 +105,31 @@ exports.category_delete_get = function(req, res, next) {
 }
 
 // Handle form data to delete an existing Category
-exports.category_delete_post = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.category_delete_post = function(req, res, next) {
+    async.parallel({
+        category_list: CL.get_category_list,
+        category: function(callback) {
+            Category.findById(req.body.categoryid)
+            .exec(callback)
+        },
+        item_list: function(callback) {
+            Item.find({ 'category': req.body.id })
+            .exec(callback)
+        }
+    }, function(err, results) {
+        if (err) { return next(results) }
+        if (results.item_list.length > 0 ) {
+            // Category has Items. Render again.
+            res.render('category_delete', { title: `Delete category: ${results.category.name}`, category: results.category, category_list: results.category_list, itemList: results.item_list})
+        } else {
+            // Category has no Items. Delete the category and redirect to index.
+            Category.findByIdAndRemove(req.body.categoryid, function deleteCategory(err) {
+                if (err) { return next(err) }
+                // Success. Redirect to homepage
+                res.redirect('/')
+            })
+        }
+    })
 }
 
 // Display form for updating an existing Category
