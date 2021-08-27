@@ -44,8 +44,14 @@ exports.item_details = function(req, res, next) {
 }
 
 // Display form for creating a new Item
-exports.item_create_get = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.item_create_get = function(req, res, next) {
+    
+    async.parallel({
+        category_list: CL.get_category_list,
+    }, function(err, results) {
+        if(err) { return next(err) }
+        res.render('item_form', { title: 'Add a new Item', category_list: results.category_list })
+    })
 }
 
 // Handle form data to create a new Item

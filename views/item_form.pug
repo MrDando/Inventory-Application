@@ -1,0 +1,26 @@
+extends layout
+
+block content
+	main 
+		h2= title
+
+		form(method='POST' action='')
+			label(for='name') Item name: 
+			input#name(type='text' name='name' required='true' value=(undefined===item ? '' : item.name))
+			label(for='category')
+			select#category(type='select' placeholder='Select a category' name='category' required='true')
+				for category in category_list
+					// Add selected option for updating
+					option(value = category._id) #{category.name}
+			label(for='description') Item description
+			textarea#description(type='textarea' name='description') #{undefined===item ? '' : item.description}
+			label(for='price') Item price: 
+			input#price(type='number' name='price' required='true' value=(undefined===item ? '' : item.price))
+			button(type='submit') Submit
+
+		if errors
+			hr
+			h3 Error while creating a new item
+			ul
+				for error in errors
+					li!= error.msg
