@@ -6,26 +6,27 @@ html
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
-    header
-      div(class='home')
-        a(href='/') Home
-      div
-        h1 Inventory Application
-    div(class='container')
-      div(class='sidebar')
-        div(class='categories')
-          h2 Categories
-          ul(class='sidebar-nav')
-            each category in category_list
-              li 
-                a(href=category.url) #{category.name}
-        div(class='actions')
-          h2 Actions
-          ul 
-            li
-              a(href='/category/create') Create a new Category
-            li
-              a(href='/item/create') Create a new Item
-            li
-              a(href='/iteminstance/create') Create a new Item Instance
-      block content
+    div.container
+      header.header-main
+        div(class='home')
+          a(href='/') Home
+        div
+          h1 Inventory Application
+      div.main-content
+        div(class='sidebar')
+          div(class='categories')
+            h2 Categories
+            ul(class='sidebar-nav')
+              each category in category_list
+                li 
+                  a(href=category.url) #{category.name}
+          div(class='actions')
+            h2 Actions
+            ul 
+              li
+                a(href='/category/create') Create a new Category
+              li
+                a(href='/item/create') Create a new Item
+              li
+                a(href='/iteminstance/create') Create a new Item Instance
+        block content

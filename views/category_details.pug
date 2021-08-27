@@ -1,8 +1,12 @@
 extends layout
 
 block content
-	main 
-		h2= title
+	main
+		header.header-dynamic
+			h2= title
+			div.btn-container
+				a.card-btn.btn-update(href=category.url +'/update') Update Category
+				a.card-btn.btn-delete(href=category.url +'/delete') Delete Category
 
 		each item in item_list
 			dt

@@ -29,7 +29,7 @@ exports.category_details = function(req, res, next) {
             return next(err)
         }
         // Successful, so render
-        res.render('category_details', { title: `Category: ${results.category.name}`, item_list: results.item_list, category_list: results.category_list})
+        res.render('category_details', { title: `Category: ${results.category.name}`, item_list: results.item_list, category: results.category, category_list: results.category_list})
     })
 }
 
