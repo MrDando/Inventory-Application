@@ -155,6 +155,39 @@ exports.category_update_get = function(req, res, next) {
 }
 
 // Handle form data to update an existing Category
-exports.category_update_post = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
-}
+exports.category_update_post = [
+
+    body('name', 'Category name required').trim().isLength({min: 1}).escape(),
+    body('description').trim().escape(),
+
+    (req, res, next) => {
+
+        // Extract the validation errors from a request.
+        const errors = validationResult(req);
+
+        // Create a category object with escaped and trimmed data.
+        var category = new Category(
+            {   name: req.body.name,
+                description: req.body.description,
+                _id: req.params.id
+             });
+
+        if(!errors.isEmpty()) {
+            // There are errors. Render form again with sanitized values/error messages.
+            async.parallel({
+                category_list: CL.get_category_list,
+            }, function(err, results) {
+                if(err) { return next(err)}
+
+                res.render('category_form', { title: 'Create a new Category' , category_list: results.category_list, category: category, errors: errors.array() })
+            })
+        } else {
+            // Data form is valid. Update category.
+            Category.findByIdAndUpdate(req.params.id, category, {}, function (err, thecategory) {
+                if(err) { return next (err) }
+                // Successful - redirect to category page
+                res.redirect(thecategory.url);
+            })
+        }
+    }
+]
