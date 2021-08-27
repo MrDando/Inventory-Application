@@ -81,8 +81,27 @@ exports.category_create_post = [
 ]
 
 // Display form for deleting an existing Category
-exports.category_delete_get = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.category_delete_get = function(req, res, next) {
+    
+    async.parallel({
+        category_list: CL.get_category_list,
+        category: function(callback) {
+            Category.findById(req.params.id)
+            .exec(callback)
+        },
+        item_list: function(callback) {
+            Item.find({ 'category': req.params.id })
+            .exec(callback)
+        }
+    }, function (err, results) {
+        if (err) { return next(err) }
+        if (results.category==null) {
+            let err = new Error('Category not found')
+            err.status = 404;
+            return next(err)
+        }
+        res.render('category_delete', { title: `Delete category: ${results.category.name}`, category: results.category, category_list: results.category_list, itemList: results.item_list})
+    })
 }
 
 // Handle form data to delete an existing Category

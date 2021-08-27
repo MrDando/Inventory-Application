@@ -76,6 +76,7 @@ input, textarea {
 }
 
 .card-btn {
+  width: fit-content;
   text-decoration: none;
   font-weight: bolder;
   padding: .35em 1em;
