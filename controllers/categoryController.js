@@ -133,8 +133,25 @@ exports.category_delete_post = function(req, res, next) {
 }
 
 // Display form for updating an existing Category
-exports.category_update_get = function(req, res) {
-    res.send('PAGE NOT IMPLEMENTED')
+exports.category_update_get = function(req, res, next) {
+    
+    async.parallel({
+        category_list: CL.get_category_list,
+        category: function(callback) {
+            Category.findById(req.params.id)
+            .exec(callback)
+        }
+    }, function(err, results) {
+        if (err) { return next(err) }
+        if (results.category==null) {
+            // Category not found
+            let err = new Error('Category not found');
+            err.status = 404;
+            return next(err);
+        }
+        // Success
+        res.render('category_form', { title: 'Update a vCategory' , category: results.category, category_list: results.category_list})
+    })
 }
 
 // Handle form data to update an existing Category
