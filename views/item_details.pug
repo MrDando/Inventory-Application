@@ -2,7 +2,11 @@ extends layout
 
 block content
 	main
-		h2= title 
+		header.header-dynamic
+			h2= title
+			div.btn-container
+				a.card-btn.btn-update(href=item.url +'/update') Update Category
+				a.card-btn.btn-delete(href=item.url +'/delete') Delete Category
 
 		table 
 			tr 

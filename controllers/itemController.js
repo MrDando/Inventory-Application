@@ -38,7 +38,7 @@ exports.item_details = function(req, res, next) {
                 return a.size - b.size
             })
         }
-        res.render('item_details', { title: `Item: ${results.item.name}`, itemInstanceList: results.item_instances, category_list: results.category_list})
+        res.render('item_details', { title: `Item: ${results.item.name}`, item: results.item, itemInstanceList: results.item_instances, category_list: results.category_list})
     })
     
 }
